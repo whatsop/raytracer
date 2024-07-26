@@ -9,16 +9,7 @@ pub struct Vec3 {
 
 impl Vec3 {
     /// initialize with default values
-    pub fn new() -> Self {
-        Self {
-            x: 0.0,
-            y: 0.0,
-            z: 0.0,
-        }
-    }
-
-    /// initialize from values
-    pub fn from(x: f32, y: f32, z: f32) -> Self {
+    pub fn new(x: f32, y: f32, z: f32) -> Self {
         Self { x, y, z }
     }
 
