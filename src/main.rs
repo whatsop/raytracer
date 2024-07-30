@@ -3,16 +3,20 @@ use std::io::{self, Write};
 use std::path::Path;
 
 // pull mod declarations
+mod color;
+mod point3;
 mod ray;
 mod vec3;
 
+use color::Color;
+use point3::Point3;
 use ray::Ray;
 use vec3::Vec3;
 
 fn main() {
     // image settings
-    let image_width: f32 = 5.0;
-    let image_height: f32 = 4.0;
+    let image_width: f32 = 256.0;
+    let image_height: f32 = 256.0;
     let image_path = Path::new("render/image.ppm");
 
     // render
@@ -31,6 +35,8 @@ fn main() {
 
 /// render the image
 fn render(image_width: f32, image_height: f32, image_path: &Path) {
+
+    // get image file
     let mut file = File::create(image_path).expect("Path is incorrect !");
 
     // write to the file
@@ -47,12 +53,10 @@ fn render(image_width: f32, image_height: f32, image_path: &Path) {
             let green = row as f32 / (image_height - 1.0);
             let blue = 0.0f32;
 
-            let output_red = (255.999 * red) as i32;
-            let output_green = (255.999 * green) as i32;
-            let output_blue = (255.999 * blue) as i32;
-
-            // write to the file
-            let rgb_data = format!("{} {} {}\n", output_red, output_green, output_blue);
+            // write rgb data to the file
+            let color_bytes = Color::new(red, green, blue).as_bytes();
+            let rgb_data = format!("{} {} {}\n", color_bytes[0], color_bytes[1], color_bytes[2]);
+            println!("{}", rgb_data);
             file.write(rgb_data.as_bytes())
                 .expect("Could not write to the file !");
 
