@@ -4,33 +4,28 @@ use std::path::Path;
 
 // pull mod declarations
 mod color;
-mod point3;
 mod ray;
 mod vec3;
 
 use color::Color;
-use point3::Point3;
 use ray::Ray;
 use vec3::Vec3;
 
 fn main() {
     // image settings
-    let image_width: f32 = 256.0;
-    let image_height: f32 = 256.0;
+    let image_width: f32 = 2.0;
+    let image_height: f32 = 2.0;
     let image_path = Path::new("render/image.ppm");
 
     // render
     render(image_width, image_height, &image_path);
 
-    // let vector_a = Vec3::from(1.0, 1.0, 1.0);
-    // let vector_b = Vec3::from(1.0, 2.0, 0.0);
+    let origin = Vec3::new(0.0, 0.0, 0.0);
+    let direction = Vec3::new(1.0, 0.0, 0.0);
+    let ray_a = Ray::new(origin, direction);
+    println!("{:?}", ray_a);
+    println!("{:?}", ray_a.at(2.0));
 
-    // let sum = vector_a+vector_b;
-
-    // println!("{:?}", sum);
-
-    // let ray_a = Ray::from(Vec3::new(), Vec3::new());
-    // println!("{:?}", ray_a.origin);
 }
 
 /// render the image

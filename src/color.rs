@@ -1,6 +1,6 @@
-use std::ops::{self, Add};
+use std::ops::{Add};
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Color {
     pub r: f32,
     pub g: f32,
@@ -23,7 +23,7 @@ impl Color {
     }
 }
 
-impl ops::Add for Color {
+impl Add<Color> for Color {
     type Output = Self;
     fn add(self, rhs: Self) -> Self::Output {
         Self {
@@ -31,5 +31,18 @@ impl ops::Add for Color {
             g: self.g + rhs.g,
             b: self.b + rhs.b,
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn color_add_color() {
+        assert_eq!(
+            Color::new(1.0, 0.0, 0.0),
+            Color::new(0.5, 0.0, 0.0) + Color::new(0.5, 0.0, 0.0)
+        )
     }
 }
