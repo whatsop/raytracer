@@ -1,4 +1,4 @@
-use std::ops::{Add};
+use std::ops::{Add, Mul};
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Color {
@@ -34,6 +34,28 @@ impl Add<Color> for Color {
     }
 }
 
+impl Mul<f32> for Color {
+    type Output = Self;
+    fn mul(self, rhs: f32) -> Self::Output {
+        Self {
+            r: self.r * rhs,
+            g: self.g * rhs,
+            b: self.b * rhs,
+        }
+    }
+}
+
+impl Mul<Color> for f32 {
+    type Output = Color;
+    fn mul(self, rhs: Color) -> Self::Output {
+        Color {
+            r: rhs.r * self,
+            g: rhs.g * self,
+            b: rhs.b * self,
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -44,5 +66,15 @@ mod tests {
             Color::new(1.0, 0.0, 0.0),
             Color::new(0.5, 0.0, 0.0) + Color::new(0.5, 0.0, 0.0)
         )
+    }
+
+    #[test]
+    fn color_mul_f32() {
+        assert_eq!(Color::new(2.0, 2.0, 2.0), Color::new(1.0, 1.0, 1.0) * 2.0)
+    }
+
+    #[test]
+    fn f32_mul_color() {
+        assert_eq!(Color::new(2.0, 2.0, 2.0), 2.0 * Color::new(1.0, 1.0, 1.0))
     }
 }
